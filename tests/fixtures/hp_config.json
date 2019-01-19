@@ -1,0 +1,15 @@
+{
+    "ftfy_fix_text": {
+        "grid_search": [
+            true,
+            false
+        ]
+    },
+    "hashtags_embedding_dim": {
+        "grid_search": [
+            10,
+            20
+        ]
+    },
+    "num_epochs": 1
+}

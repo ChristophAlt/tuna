@@ -1,6 +1,6 @@
 # External dependencies
 ray
-pyyaml
-#track
+allennlp
 
-git+https://github.com/richardliaw/track.git@master#egg=track
+# Testing
+pytest

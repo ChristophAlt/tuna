@@ -1,0 +1,14 @@
+{
+    "hidden_size": {
+        "grid_search": [
+            3,
+            5
+        ]
+    },
+    "num_layers": {
+        "grid_search": [
+            1,
+            2
+        ]
+    }
+}

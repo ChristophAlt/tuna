@@ -4,3 +4,4 @@ allennlp
 
 # Testing
 pytest
+pytest-cov

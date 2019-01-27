@@ -68,13 +68,18 @@ class AllenNlpRunner(Runner):
                 import_submodules(package_name)
 
             run_parameters = {k: json.dumps(v) for k, v in config.items()}
+
             file_dict = json.loads(
                 _jsonnet.evaluate_snippet(
                     "config", parameter_file_snippet, tla_codes=run_parameters
                 )
             )
+            if default_args.num_gpus == 0:
+                logger.warning(f"No GPU specified, using CPU.")
+                file_dict["trainer"]["cuda_device"] = -1
 
             overrides_dict = parse_overrides(run_args.overrides)
+
             params_dict = with_fallback(preferred=overrides_dict, fallback=file_dict)
 
             params = Params(params_dict)

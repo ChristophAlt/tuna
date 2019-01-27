@@ -1,6 +1,5 @@
 # External dependencies
 ray
-allennlp
 
 # Testing
 pytest

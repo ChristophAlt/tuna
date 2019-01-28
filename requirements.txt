@@ -1,5 +1,5 @@
 # External dependencies
-ray
+ray==0.6.2
 
 # Testing
 pytest

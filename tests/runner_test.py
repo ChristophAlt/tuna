@@ -12,8 +12,6 @@ class TestRunner:
             [
                 "--parameter-file",
                 "/parameter/file.jsonnet",
-                "--serialization-dir",
-                "/serialization/dir/",
                 "--include-package",
                 "package1",
             ]
@@ -21,5 +19,4 @@ class TestRunner:
 
         run_args_dict = vars(run_args)
         assert run_args_dict["parameter_file"] == "/parameter/file.jsonnet"
-        assert run_args_dict["serialization_dir"] == "/serialization/dir/"
         assert run_args_dict["include_package"] == ["package1"]

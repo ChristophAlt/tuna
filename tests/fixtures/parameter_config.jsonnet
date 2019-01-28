@@ -17,8 +17,8 @@ function (hidden_size=7, num_layers=3) {
         }
     },
     "dataset_reader": {"type": "sequence_tagging"},
-    "train_data_path": "",
-    "validation_data_path": "",
+    "train_data_path": "./sequence_tagging.tsv",
+    "validation_data_path": "./sequence_tagging.tsv",
     "iterator": {"type": "basic", "batch_size": 2},
     "trainer": {
         "num_epochs": 2,

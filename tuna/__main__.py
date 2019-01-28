@@ -16,7 +16,11 @@ logging.basicConfig(
 )
 
 
-if __name__ == "__main__":
+def main():
     runner = AllenNlpRunner()
     executor = RayExecutor(runner)
     executor.run(sys.argv[1:])
+
+
+if __name__ == "__main__":
+    main()

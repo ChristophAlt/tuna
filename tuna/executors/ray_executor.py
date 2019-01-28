@@ -1,3 +1,4 @@
+import os
 import argparse
 import logging
 import json
@@ -20,21 +21,67 @@ class RayExecutor(Executor):
         super(RayExecutor, self).__init__(runner)
 
     def default_argument_parser(self):
-        parser = argparse.ArgumentParser(description="tuna")
+        parser = argparse.ArgumentParser(description="Run tuna")
 
-        parser.add_argument("--experiment-name", type=str, required=True)
-        parser.add_argument("--num-cpus", type=int, default=1)
-        parser.add_argument("--num-gpus", type=int, default=1)
-        parser.add_argument("--cpus-per-trial", type=int, default=1)
-        parser.add_argument("--gpus-per-trial", type=int, default=1)
-        parser.add_argument("--log-dir", type=str, default="./logs")
-
-        parser.add_argument("--with-server", action="store_true", default=False)
-        parser.add_argument("--server-port", type=int, default=10000)
-
-        parser.add_argument("--search-strategy", type=str, default="variant-generation")
         parser.add_argument(
-            "--hyperparameters", type=argparse.FileType("r"), required=True
+            "--experiment-name",
+            type=str,
+            required=True,
+            help="a name for the experiment",
+        )
+        parser.add_argument(
+            "--num-cpus",
+            type=int,
+            default=1,
+            help="number of CPUs available to the experiment",
+        )
+        parser.add_argument(
+            "--num-gpus",
+            type=int,
+            default=1,
+            help="number of GPUs available to the experiment",
+        )
+        parser.add_argument(
+            "--cpus-per-trial",
+            type=int,
+            default=1,
+            help="number of CPUs dedicated to a single trial",
+        )
+        parser.add_argument(
+            "--gpus-per-trial",
+            type=int,
+            default=1,
+            help="number of GPUs dedicated to a single trial",
+        )
+        parser.add_argument(
+            "--log-dir",
+            type=str,
+            default="./logs",
+            help="directory in which to store trial logs and results",
+        )
+        parser.add_argument(
+            "--with-server",
+            action="store_true",
+            default=False,
+            help="start the Ray server",
+        )
+        parser.add_argument(
+            "--server-port",
+            type=int,
+            default=10000,
+            help="port for Ray server to listens on",
+        )
+        parser.add_argument(
+            "--search-strategy",
+            type=str,
+            default="variant-generation",
+            help="hyperparameter search strategy used by Ray-Tune",
+        )
+        parser.add_argument(
+            "--hyperparameters",
+            type=argparse.FileType("r"),
+            required=True,
+            help="path to file describing the hyperparameter search space",
         )
 
         return parser
@@ -60,7 +107,7 @@ class RayExecutor(Executor):
         experiments_config = {
             default_args.experiment_name: {
                 "run": "run",
-                "trial_resources": {
+                "resources_per_trial": {
                     "cpu": default_args.cpus_per_trial,
                     "gpu": default_args.gpus_per_trial,
                 },

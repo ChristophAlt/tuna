@@ -50,17 +50,19 @@ optional arguments:
 
 ### Example
 
-Switch to tuna directory and run the following command:
+Switch to the `example` directory and run the following command:
+
 ```bash
-$ tuna \
-    --experiment-name test_experiment \
-    --hyperparameters ./tests/fixtures/hyperparam_config.json \
-    --parameter-file ./tests/fixtures/parameter_config.jsonnet \
-    --log-dir ./experiments/ \
-    --num-cpus=2 \
-    --num-gpus=0 \
-    --cpus-per-trial=1 \
-    --gpus-per-trial=0
+tuna \
+    --experiment-name "example" \
+    --hyperparameters ./text_classifier/hyperparam.json \
+    --include-package my_library \
+    --parameter-file ./text_classifier/config.jsonnet \
+    --log-dir ~/experiment_results/text_classifier/ \
+    --num-cpus 4 \
+    --num-gpus 0 \
+    --cpus-per-trial 1 \
+    --gpus-per-trial 0
 ```
 
 ## How does it work?

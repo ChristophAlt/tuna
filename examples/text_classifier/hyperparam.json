@@ -1,0 +1,20 @@
+{
+    "num_filters": {
+        "grid_search": [
+            6,
+            7
+        ]
+    },
+    "ngram_filter_sizes": {
+        "grid_search": [
+            [
+                2,
+                3
+            ],
+            [
+                3,
+                4
+            ]
+        ]
+    }
+}

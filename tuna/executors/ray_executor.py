@@ -83,6 +83,14 @@ class RayExecutor(Executor):
             required=True,
             help="path to file describing the hyperparameter search space",
         )
+        parser.add_argument(
+            "--num-samples",
+            type=int,
+            default=1,
+            help="Number of times to sample from the hyperparameter space. "
+            + "If grid_search is provided as an argument, the grid will be "
+            + "repeated num_samples of times.",
+        )
 
         return parser
 
@@ -113,6 +121,7 @@ class RayExecutor(Executor):
                 },
                 "config": hyperparam_config,
                 "local_dir": default_args.log_dir,
+                "num_samples": default_args.num_samples,
             }
         }
 

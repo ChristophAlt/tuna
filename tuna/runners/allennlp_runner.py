@@ -27,13 +27,6 @@ class AllenNlpRunner(Runner):
             type=os.path.abspath,
             help="path to parameter file describing the model to be trained",
         )
-        # parser.add_argument(
-        #     "-s",
-        #     "--serialization-dir",
-        #     required=True,
-        #     type=str,
-        #     help="directory in which to save the model and its logs",
-        # )
         parser.add_argument(
             "--include-package",
             type=str,
@@ -83,29 +76,22 @@ class AllenNlpRunner(Runner):
             params_dict = with_fallback(preferred=overrides_dict, fallback=file_dict)
 
             # Make sure path is absolute (as Ray workers do not use the same working dir)
-            params_dict["train_data_path"] = os.path.abspath(
-                os.path.join(
-                    os.path.dirname(run_args.parameter_file),
-                    params_dict["train_data_path"],
+            train_data_path = params_dict["train_data_path"]
+            validation_data_path = params_dict.get("validation_data_path")
+
+            if not os.path.isabs(train_data_path):
+                params_dict["train_data_path"] = os.path.abspath(
+                    os.path.join(default_args.cwd, train_data_path)
                 )
-            )
-            if "validation_data_path" in params_dict:
+
+            if validation_data_path and not os.path.isabs(validation_data_path):
                 params_dict["validation_data_path"] = os.path.abspath(
-                    os.path.join(
-                        os.path.dirname(run_args.parameter_file),
-                        params_dict["validation_data_path"],
-                    )
+                    os.path.join(default_args.cwd, validation_data_path)
                 )
 
             params = Params(params_dict)
 
             logger.debug(f"AllenNLP Configuration: {params.as_dict()}")
-
-            # serialization_dir = os.path.join(
-            #     run_args.serialization_dir,
-            #     default_args.experiment_name,
-            #     datetime.now().strftime("%Y-%m-%d__%H-%M__%f"),
-            # )
 
             train_model(params=params, serialization_dir="./trial/")
 

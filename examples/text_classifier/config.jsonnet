@@ -2,7 +2,7 @@ function(num_filters=5, ngram_filter_sizes=[2], batch_size=1, num_epochs=5) {
 
     local classifier_input_dim = num_filters * std.length(ngram_filter_sizes),
 
-    "train_data_path": "./ag_news_corpus.jsonl",
+    "train_data_path": "./text_classifier/ag_news_corpus.jsonl",
 
     "dataset_reader": {
         "type": "ag_news",

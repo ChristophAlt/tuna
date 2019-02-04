@@ -1,3 +1,4 @@
+import os
 import argparse
 import logging
 
@@ -44,5 +45,6 @@ class Executor(ABC):
 
     def run(self, args: List[str]) -> None:
         default_args, run_args = self.parse_args(args)
+        setattr(default_args, "cwd", os.getcwd())
         run_func = self._runner.get_run_func(default_args, run_args)
         self.run_distributed(run_func, default_args, run_args)

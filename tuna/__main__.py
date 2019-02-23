@@ -179,14 +179,27 @@ def multi(args):
         #     with open(hyperparameters, "r") as hyperparameter_f:
         #         hyperparameters = json.load(hyperparameter_f)
 
-        run_parameters = run.get("run_parameters", [None])
+        run_parameters = run.get("run_parameters")
 
-        for run_p in run_parameters:
+        if run_parameters:
+            for run_id, run_p in enumerate(run_parameters):
+                experiment = AllenNlpExperiment(
+                    experiment_name=experiment_name,
+                    parameter_file=parameter_file,
+                    run_parameters=run_p,
+                    current_working_dir=os.getcwd(),
+                    log_dir=args.log_dir,
+                    resources_per_trial=resources_per_trial,
+                    num_samples=num_samples,
+                    include_packages=args.include_package,
+                    run_id=run_id,
+                )
+                experiments.append(experiment)
+        else:
             experiment = AllenNlpExperiment(
                 experiment_name=experiment_name,
                 parameter_file=parameter_file,
                 hyperparameters=hyperparameters,
-                run_parameters=run_p,
                 current_working_dir=os.getcwd(),
                 log_dir=args.log_dir,
                 resources_per_trial=resources_per_trial,

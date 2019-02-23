@@ -2,6 +2,7 @@ from typing import List, Union, Optional
 
 import logging
 import ray
+import time
 from ray.tune import run_experiments
 from tuna.allennlp_experiment import AllenNlpExperiment
 
@@ -21,4 +22,7 @@ class RayExecutor:
         if type(experiments) is not list:
             experiments = [experiments]
 
-        run_experiments([experiment.to_ray_experiment() for experiment in experiments])
+        ray_experiments = [experiment.to_ray_experiment() for experiment in experiments]
+        # TODO: this needs to be investigated further
+        time.sleep(5)
+        run_experiments(ray_experiments)

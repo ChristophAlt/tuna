@@ -34,7 +34,7 @@ setup(
     license="Apache",
     url="https://github.com/ChristophAlt/tuna",
     packages=find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
-    install_requires=["ray==0.6.2"],
+    install_requires=["ray>=0.6.2"],
     entry_points={"console_scripts": ["tuna=tuna.__main__:main"]},
     python_requires=">=3.6.0",
     tests_require=["pytest"],

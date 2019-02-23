@@ -66,6 +66,8 @@ class AllenNlpExperiment:
             for package_name in include_packages:
                 import_submodules(package_name)
 
+            logger.info(f"Run parameters: {run_parameters}")
+            logger.info(f"Config parameters: {config_parameters}")
             run_parameters = config or run_parameters
 
             run_params = {k: json.dumps(v) for k, v in run_parameters.items()}

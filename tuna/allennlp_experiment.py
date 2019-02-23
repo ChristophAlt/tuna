@@ -6,6 +6,7 @@ import logging
 import _jsonnet
 import json
 from functools import partial
+from ray import tune
 from ray.tune import Experiment, register_trainable
 from allennlp.common.params import Params
 from allennlp.commands.train import train_model
@@ -108,6 +109,17 @@ class AllenNlpExperiment:
             ),
         )
 
+        def trial_name_creator(trial):
+            params = ",".join(
+                [
+                    f"{k}={v}"
+                    for k, v in sorted(
+                        self._run_parameters.items(), key=lambda kv: kv[0]
+                    )
+                ]
+            )
+            return f"{trial}_{params}"
+
         config = self._hyperparameters or {}
         return Experiment(
             name=self._experiment_name,
@@ -115,4 +127,7 @@ class AllenNlpExperiment:
             config=config,
             resources_per_trial=self._resources_per_trial,
             local_dir=self._log_dir,
+            trial_name_creator=tune.function(trial_name_creator)
+            if self._run_parameters
+            else None,
         )

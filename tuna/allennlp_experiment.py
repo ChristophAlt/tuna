@@ -73,6 +73,7 @@ class AllenNlpExperiment:
                     "config", parameter_file_snippet, tla_codes=run_params
                 )
             )
+            logger.info(f"Run parameters: {run_params}")
 
             if not gpus_available:
                 logger.warning("No GPU specified, using CPU.")
@@ -87,7 +88,7 @@ class AllenNlpExperiment:
                             os.path.join(current_working_dir, path)
                         )
 
-            logger.debug(f"AllenNLP Configuration: {params_dict}")
+            logger.info(f"AllenNLP Configuration: {params_dict}")
             params = Params(params_dict)
 
             train_model(params=params, serialization_dir=serialization_dir)

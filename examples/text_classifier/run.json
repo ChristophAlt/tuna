@@ -1,0 +1,38 @@
+{
+    "runs": [
+        {
+            "experiment_name": "test_a",
+            "parameter_file": "./text_classifier/config.jsonnet",
+            "hyperparameters": {
+                "num_filters": {
+                    "eval": "lambda x: np.random.randint(1, 6)"
+                },
+                "ngram_filter_sizes": {
+                    "grid_search": [
+                        [
+                            2,
+                            3
+                        ],
+                        [
+                            3,
+                            4
+                        ]
+                    ]
+                }
+            }
+        },
+        {
+            "experiment_name": "test_b",
+            "parameter_file": "./text_classifier/config.jsonnet",
+            "run_parameters": [
+                {
+                    "num_filters": 7,
+                    "ngram_filter_sizes": [
+                        5,
+                        6
+                    ]
+                }
+            ]
+        }
+    ]
+}
